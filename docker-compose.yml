@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: kahuaski
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: tranqui_dockerdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - 5438:5432
+volumes:
+  db_data:
