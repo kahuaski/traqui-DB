@@ -9,10 +9,7 @@ const upload =require('../utils/multer')
 
 //findall
 
-exports.findAllProduct = catchAsync(async (req, res, next) => {
- 
- 
-  
+exports.findAllProduct = catchAsync(async (req, res, next) => { 
   
   const product = await Product.findAll({
     where: {
@@ -20,35 +17,10 @@ exports.findAllProduct = catchAsync(async (req, res, next) => {
     },
    
   });
- 
-//
-
-/*const productPromises=product.map(async(prod)=>{
-  const imgRef=ref(storage,prod.image)
-  const url=await getDownloadURL(imgRef)
-  prod.image=url
-return prod
-
-})
-
-const productsResolved= await Promise.all(productPromises)
-  //
-
- } catch (error) {
-  console.log(error);
- }
-  
-});*/
-
-// download image
-
-
-//const imgRef=ref(storage,`products/${Date.now()}-${req.File.}`)
-
 res.status(200).json({
   results: product.length,
   success: "ok",
-  product:productsResolved
+  product
 });
 
 })
