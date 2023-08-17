@@ -23,7 +23,7 @@ exports.findAllProduct = catchAsync(async (req, res, next) => {
  
 //
 
-const productPromises=product.map(async(prod)=>{
+/*const productPromises=product.map(async(prod)=>{
   const imgRef=ref(storage,prod.image)
   const url=await getDownloadURL(imgRef)
   prod.image=url
@@ -33,23 +33,23 @@ return prod
 
 const productsResolved= await Promise.all(productPromises)
   //
-  res.status(200).json({
-    results: product.length,
-    success: "ok",
-    product:productsResolved
-  });
+
  } catch (error) {
   console.log(error);
  }
   
-});
+});*/
 
 // download image
 
 
 //const imgRef=ref(storage,`products/${Date.now()}-${req.File.}`)
 
-
+res.status(200).json({
+  results: product.length,
+  success: "ok",
+  product:productsResolved
+});
 //create users
 exports.createProduct = catchAsync(async (req, res, next) => {
   const {id_restaurants,name,description,price,image}=req.body
