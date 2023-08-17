@@ -2,9 +2,10 @@
 const Product = require("../models/products.models");
 const catchAsync = require("../utils/catchASync");
 const {storage}=require('../utils/firebase')
-const { ref,getDownloadURL,uploadBytes,getStorage}=require('firebase/storage')
+const { ref,getDownloadURL,uploadBytes}=require('firebase/storage')
 const AppError = require("../utils/appError");
 const { add } = require("winston");
+const upload =require('../utils/multer')
 
 //findall
 
@@ -51,25 +52,27 @@ const productsResolved= await Promise.all(productPromises)
 
 //create users
 exports.createProduct = catchAsync(async (req, res, next) => {
- // const {id_restaurants,name,description,price}=req.body
- 
+  const {id_restaurants,name,description,price,image}=req.body
+  
   try {
+    console.table(req.body)
+    console.log('###############################')
+    console.table(req.file)
 {/*const file = fs.readFileSync('image.jpg')
 
 storage.ref('images/my-image.jpg').put(file, {
 contentType: 'image/jpeg'
 });
 */}
-    const imgRef=ref(storage,`products/${ Date.now()}`)
-    console.log('aqui')
+   /* const imgRef=  ref(storage,`products/${ Date.now()}`)
    const imageUpload=await uploadBytes(imgRef,'png' )
- 
+ */
     const product = await Product.create({
       id_restaurants,
       name,
       description,
       price,
-      image:imageUpload.metadata.fullPath
+      image
       
     })
     res.status(200).json({
@@ -77,8 +80,9 @@ contentType: 'image/jpeg'
       message: "products created",
       product,
     })
-
+next()
   } catch (error) {
+
     console.log(error)
     
   }

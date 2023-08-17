@@ -31,11 +31,11 @@ app.use('/api/v1',limiter)
 app.use(express.json())
 //middleware
 app.use(helmet())
-app.use(sanitizer.clean({
+/*app.use(sanitizer.clean({
     xss:true,
     noSql:true,
-    sql:true
-}))
+    sql:false
+}))*/
 if(process.env.NODE_ENV==='development'){
     app.use(morgan('dev'))
 }
