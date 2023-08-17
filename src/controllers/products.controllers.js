@@ -12,7 +12,7 @@ const upload =require('../utils/multer')
 exports.findAllProduct = catchAsync(async (req, res, next) => {
  
  
-    try {
+  
   
   const product = await Product.findAll({
     where: {
@@ -50,6 +50,8 @@ res.status(200).json({
   success: "ok",
   product:productsResolved
 });
+
+})
 //create users
 exports.createProduct = catchAsync(async (req, res, next) => {
   const {id_restaurants,name,description,price,image}=req.body
