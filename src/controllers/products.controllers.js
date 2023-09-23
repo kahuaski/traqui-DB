@@ -95,10 +95,19 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
 });
 //Delete Product
 exports.deleteProduct = catchAsync(async (req, res, next) => {
-  const { product } = req;
-  await product.update({ status: "disable" });
-  res.status(200).json({
-    status: "success",
-    message: `Product with id:${product.id} deleted`,
-  });
+  try {
+
+    const { product } = req;
+    await product.update({ status: "disable" });
+    res.status(200).json({
+      status: "success",
+      message: `Product with id:${product.id} deleted`,
+    })
+    
+  } catch (error) {
+    console.log(error)
+  }
+  
+ 
+
 });
