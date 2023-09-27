@@ -1,44 +1,43 @@
-
 const Product = require("../models/products.models");
 const catchAsync = require("../utils/catchASync");
-const {storage}=require('../utils/firebase')
-const { ref,getDownloadURL,uploadBytes}=require('firebase/storage')
+const { storage } = require("../utils/firebase");
+const { ref, getDownloadURL, uploadBytes } = require("firebase/storage");
 const AppError = require("../utils/appError");
 const { add } = require("winston");
-const upload =require('../utils/multer')
+const upload = require("../utils/multer");
+//const product =require('../middlewares/products.middlewares')
 
 //findall
 
-exports.findAllProduct = catchAsync(async (req, res, next) => { 
-  
+exports.findAllProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findAll({
     where: {
-      status:'available'
+      status: "available",
     },
-   
   });
-res.status(200).json({
-  results: product.length,
-  success: "ok",
-  product
+  res.status(200).json({
+    results: product.length,
+    success: "ok",
+    product,
+  });
 });
-
-})
 //create users
 exports.createProduct = catchAsync(async (req, res, next) => {
-  const {id_restaurants,name,description,price,image}=req.body
-  
+  const { id_restaurants, name, description, price, image } = req.body;
+
   try {
-    console.table(req.body)
-    console.log('###############################')
-    console.table(req.file)
-{/*const file = fs.readFileSync('image.jpg')
+    console.table(req.body);
+    console.log("###############################");
+    console.table(req.file);
+    {
+      /*const file = fs.readFileSync('image.jpg')
 
 storage.ref('images/my-image.jpg').put(file, {
 contentType: 'image/jpeg'
 });
-*/}
-   /* const imgRef=  ref(storage,`products/${ Date.now()}`)
+*/
+    }
+    /* const imgRef=  ref(storage,`products/${ Date.now()}`)
    const imageUpload=await uploadBytes(imgRef,'png' )
  */
     const product = await Product.create({
@@ -46,23 +45,17 @@ contentType: 'image/jpeg'
       name,
       description,
       price,
-      image
-      
-    })
+      image,
+    });
     res.status(200).json({
       status: "success",
       message: "products created",
       product,
-    })
-next()
+    });
+    next();
   } catch (error) {
-
-    console.log(error)
-    
+    console.log(error);
   }
- 
-
-  
 });
 
 //findOne Product
@@ -88,26 +81,21 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
       name: product.name,
       description: product.description,
       price: product.price,
-
-      
     },
   });
 });
 //Delete Product
 exports.deleteProduct = catchAsync(async (req, res, next) => {
   try {
-
     const { product } = req;
+
+    const { id } = req.params;
     await product.update({ status: "disable" });
     res.status(200).json({
       status: "success",
-      message: `Product with id:${product.id} deleted`,
-    })
-    
+      message: `Product with deleted:${id}`,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-  
- 
-
 });

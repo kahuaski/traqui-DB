@@ -55,7 +55,7 @@ app.use('/api/v1/additionals',additionalRouter)
 app.use('/api/v1/deliverys',deliveryRouter)
 
 app.use('*',(req,res,next)=>{
-    next(new AppError(`Cant find ${req.originalUrl} on this server..!`))
+   res.next(new AppError(`Cant find ${req.originalUrl} on this server..!`))
 
 })
 app.use(globalErrorHandler)
