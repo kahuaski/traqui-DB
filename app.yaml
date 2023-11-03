@@ -1,0 +1,2 @@
+runtime: nodejs18  # Puedes especificar la versión de Node.js que estás utilizando
+instance_class: F2  # Opcional, elige la clase de instancia adecuada
